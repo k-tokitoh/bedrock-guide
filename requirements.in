@@ -1,1 +1,6 @@
 boto3
+langchain
+langchain-aws
+langchain-community
+streamlit
+python-dateutil

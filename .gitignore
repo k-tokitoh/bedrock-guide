@@ -1,2 +1,5 @@
 .history/
 .venv/
+__pycache__/
+
+python/
