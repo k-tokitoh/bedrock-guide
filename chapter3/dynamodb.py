@@ -32,8 +32,12 @@ if "chain" not in st.session_state:
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", "あなたのタスクはユーザーの質問に正確に回答することです。"),
-            MessagesPlaceholder(variable_name="messages"),
-            MessagesPlaceholder(variable_name="human_message"),
+            MessagesPlaceholder(
+                variable_name="messages"
+            ),  # 過去の履歴がここに入るよ、というplaceholder
+            MessagesPlaceholder(
+                variable_name="human_message"
+            ),  # 直近のユーザーからのメッセージがここに入るよ、というplaceholder
         ]
     )
 
@@ -70,6 +74,7 @@ if prompt := st.chat_input("何でも聞いてください"):
     with st.chat_message("assistant"):
         # 毎回、会話の履歴全体を送る、最後がuser promptだと、それに対する返答が返ってくる、ということらしい。
         response = st.write_stream(
+            # stream() で、引数を最初の入力としてchainを実行する
             st.session_state.chain.stream(
                 {
                     "messages": st.session_state.history.messages,
